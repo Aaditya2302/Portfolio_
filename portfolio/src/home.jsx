@@ -42,6 +42,7 @@ import {
   Menu,
   X,
 } from "lucide-react"
+import profile from "./assets/profile_photo.jpg"
 
 // Shadcn UI Components
 const Button = ({ children, className = "", variant = "default", size = "default", ...props }) => {
@@ -605,10 +606,10 @@ const AboutMeContent = () => (
   <div className="space-y-4 md:space-y-6">
     <div className="text-center">
       {/* Profile Photo */}
-      <div className="w-20 h-20 md:w-24 md:h-24 mx-auto mb-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 p-1">
+      <div className="w-50 h-50 md:w-40 md:h-40 mx-auto mb-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 p-1">
         <div className="w-full h-full rounded-full bg-gray-800 flex items-center justify-center overflow-hidden">
           <img
-            src="/placeholder.svg?height=96&width=96&text=Aaditya"
+            src={profile}
             alt="Aaditya Aggarwal"
             className="w-full h-full object-cover rounded-full"
             onError={(e) => {
