@@ -944,15 +944,6 @@ const ContactContent = () => (
               <p className="text-xs md:text-sm text-gray-200 truncate">aadityaaggarwal475@gmail.com</p>
             </div>
           </div>
-
-          <div className="flex items-center space-x-3 p-3 bg-gray-600/50 rounded-lg border border-gray-500">
-            <Phone className="w-4 h-4 md:w-5 md:h-5 text-green-400 flex-shrink-0" />
-            <div>
-              <p className="text-xs text-gray-400">Phone</p>
-              <p className="text-xs md:text-sm text-gray-200">+91 9625681776</p>
-            </div>
-          </div>
-
           <div className="flex items-center space-x-3 p-3 bg-gray-600/50 rounded-lg border border-gray-500">
             <Linkedin className="w-4 h-4 md:w-5 md:h-5 text-blue-400 flex-shrink-0" />
             <div className="min-w-0">
