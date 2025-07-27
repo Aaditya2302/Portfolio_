@@ -42,7 +42,6 @@ import {
   Menu,
   X,
 } from "lucide-react"
-import profile from "./assets/profile_photo.jpg"
 
 // Shadcn UI Components
 const Button = ({ children, className = "", variant = "default", size = "default", ...props }) => {
@@ -111,7 +110,7 @@ const Badge = ({ children, className = "", variant = "default", ...props }) => {
   )
 }
 
-// Technology Icon Component - Updated to handle Lucide React icons
+// Technology Icon Component
 const TechIcon = ({ name, icon: IconComponent, color, delay = 0 }) => {
   const [isVisible, setIsVisible] = useState(false)
 
@@ -250,7 +249,7 @@ const Window = ({
     if (window.innerWidth < 768) {
       setSize({
         width: Math.min(window.innerWidth - 20, initialWidth),
-        height: Math.min(window.innerHeight - 100, initialHeight),
+        height: Math.min(window.innerHeight - 120, initialHeight), // More space for mobile taskbar
       })
       setPosition({
         x: 10,
@@ -286,14 +285,14 @@ const Window = ({
     if (isDragging) {
       setPosition({
         x: Math.max(0, Math.min(window.innerWidth - size.width, e.clientX - dragOffset.x)),
-        y: Math.max(0, Math.min(window.innerHeight - size.height - 60, e.clientY - dragOffset.y)),
+        y: Math.max(0, Math.min(window.innerHeight - size.height - 80, e.clientY - dragOffset.y)), // Account for taskbar
       })
     } else if (isResizing) {
       const newWidth = resizeStart.width + (e.clientX - resizeStart.x)
       const newHeight = resizeStart.height + (e.clientY - resizeStart.y)
       setSize({
         width: Math.max(300, Math.min(window.innerWidth - position.x, newWidth)),
-        height: Math.max(200, Math.min(window.innerHeight - position.y - 60, newHeight)),
+        height: Math.max(200, Math.min(window.innerHeight - position.y - 80, newHeight)), // Account for taskbar
       })
     }
   }
@@ -319,10 +318,10 @@ const Window = ({
   return (
     <div
       ref={windowRef}
-      className={`absolute bg-gray-800/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden flex flex-col transition-all duration-300 border border-gray-600/50 ${
+      className={`fixed bg-gray-800/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden flex flex-col transition-all duration-300 border border-gray-600/50 ${
         isFocused ? "z-50 shadow-blue-500/20" : "z-40"
       } ${isAnimating ? "scale-95 opacity-0" : "scale-100 opacity-100"} ${
-        isMobile ? "inset-2 !w-auto !h-auto !left-2 !top-2 !right-2 !bottom-16" : ""
+        isMobile ? "inset-4 !w-auto !h-auto !left-4 !top-4 !right-4 !bottom-20" : "absolute"
       }`}
       style={
         !isMobile
@@ -379,9 +378,9 @@ const MobileNav = ({ windowConfigs, openWindow, isOpen, onToggle }) => {
 
   return (
     <div className="md:hidden fixed inset-0 bg-black/50 z-50 flex items-end">
-      <div className="w-full bg-white/95 backdrop-blur-xl rounded-t-xl p-4 max-h-[80vh] overflow-y-auto">
+      <div className="w-full bg-white/95 backdrop-blur-xl rounded-t-xl p-4 max-h-[70vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-gray-800">Menu</h2>
+          <h2 className="text-lg font-semibold text-gray-800">Portfolio Menu</h2>
           <Button variant="ghost" size="sm" onClick={onToggle}>
             <X className="w-4 h-4" />
           </Button>
@@ -606,10 +605,10 @@ const AboutMeContent = () => (
   <div className="space-y-4 md:space-y-6">
     <div className="text-center">
       {/* Profile Photo */}
-      <div className="w-40 h-40 md:w-50 md:h-50 mx-auto mb-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 p-1">
+      <div className="w-20 h-20 md:w-24 md:h-24 mx-auto mb-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 p-1">
         <div className="w-full h-full rounded-full bg-gray-800 flex items-center justify-center overflow-hidden">
           <img
-            src={profile}
+            src="/placeholder.svg?height=96&width=96&text=Aaditya"
             alt="Aaditya Aggarwal"
             className="w-full h-full object-cover rounded-full"
             onError={(e) => {
@@ -1274,7 +1273,7 @@ export default function DesktopPortfolio() {
 
       {/* Search Input Overlay */}
       {showSearchInput && (
-        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg p-4 md:p-6 w-full max-w-md">
             <h3 className="text-base md:text-lg font-semibold mb-4">Search</h3>
             <input
@@ -1326,7 +1325,7 @@ export default function DesktopPortfolio() {
 
       {/* Start Menu - Desktop only */}
       {showStartMenu && (
-        <div className="hidden md:block absolute bottom-16 left-4 w-80 bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-200/50 p-4 z-50">
+        <div className="hidden md:block fixed bottom-16 left-4 w-80 bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-200/50 p-4 z-50">
           <div className="flex items-center space-x-3 mb-4 pb-4 border-b border-gray-200">
             <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 p-0.5">
               <div className="w-full h-full rounded-full bg-white flex items-center justify-center">
@@ -1366,8 +1365,8 @@ export default function DesktopPortfolio() {
         </div>
       )}
 
-      {/* Enhanced Taskbar - Responsive */}
-      <div className="absolute bottom-0 left-0 right-0 h-12 md:h-16 bg-white/80 backdrop-blur-xl border-t border-gray-200/50 flex items-center justify-between px-2 md:px-4 shadow-lg">
+      {/* Enhanced Taskbar - Fixed positioning for mobile */}
+      <div className="fixed bottom-0 left-0 right-0 h-16 md:h-16 bg-white/90 backdrop-blur-xl border-t border-gray-200/50 flex items-center justify-between px-2 md:px-4 shadow-lg z-30">
         {/* Start Menu / Mobile Menu */}
         <div className="flex items-center space-x-2 md:space-x-4">
           <button
@@ -1380,10 +1379,10 @@ export default function DesktopPortfolio() {
             }}
             className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100/80 transition-colors"
           >
-            <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 p-0.5">
+            <div className="w-8 h-8 md:w-8 md:h-8 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 p-0.5">
               <div className="w-full h-full rounded-lg bg-white flex items-center justify-center">
-                <Menu className="w-3 h-3 md:w-4 md:h-4 text-blue-600 md:hidden" />
-                <Grid3X3 className="w-3 h-3 md:w-4 md:h-4 text-blue-600 hidden md:block" />
+                <Menu className="w-4 h-4 text-blue-600 md:hidden" />
+                <Grid3X3 className="w-4 h-4 text-blue-600 hidden md:block" />
               </div>
             </div>
           </button>
@@ -1419,9 +1418,9 @@ export default function DesktopPortfolio() {
                   title={config.title}
                 >
                   <div
-                    className={`w-6 h-6 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-gradient-to-r ${config.color} flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow`}
+                    className={`w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-gradient-to-r ${config.color} flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow`}
                   >
-                    <Icon className="w-3 h-3 md:w-5 md:h-5 text-white" />
+                    <Icon className="w-4 h-4 md:w-5 md:h-5 text-white" />
                   </div>
                   {isOpen && !isMinimized && (
                     <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-blue-600 rounded-full" />
@@ -1443,11 +1442,6 @@ export default function DesktopPortfolio() {
                   <WifiOff className="w-3 h-3 md:w-4 md:h-4" />
                 )}
               </Button>
-              {wifiConnected && (
-                <div className="hidden md:block absolute -top-8 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                  Connected
-                </div>
-              )}
             </button>
 
             <button onClick={() => setVolumeOn(!volumeOn)} className="relative group">
@@ -1458,9 +1452,6 @@ export default function DesktopPortfolio() {
                   <VolumeX className="w-3 h-3 md:w-4 md:h-4" />
                 )}
               </Button>
-              <div className="hidden md:block absolute -top-8 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                {volumeOn ? "100%" : "Muted"}
-              </div>
             </button>
 
             <button className="relative group">
@@ -1471,9 +1462,6 @@ export default function DesktopPortfolio() {
                   <BatteryLow className="w-3 h-3 md:w-4 md:h-4" />
                 )}
               </Button>
-              <div className="hidden md:block absolute -top-8 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                {batteryLevel}%
-              </div>
             </button>
           </div>
 
@@ -1500,7 +1488,7 @@ export default function DesktopPortfolio() {
       {/* Click outside to close menus */}
       {(showStartMenu || showMobileNav) && (
         <div
-          className="absolute inset-0 z-40"
+          className="fixed inset-0 z-40"
           onClick={() => {
             setShowStartMenu(false)
             setShowMobileNav(false)
