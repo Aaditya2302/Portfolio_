@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef } from "react";
 import {
   User,
   Code,
@@ -41,65 +41,84 @@ import {
   Workflow,
   Menu,
   X,
-} from "lucide-react"
-import profile from "./assets/profile_photo.jpg"
+} from "lucide-react";
+import profile from "./assets/profile_photo.jpg";
 
 // Shadcn UI Components
-const Button = ({ children, className = "", variant = "default", size = "default", ...props }) => {
+const Button = ({
+  children,
+  className = "",
+  variant = "default",
+  size = "default",
+  ...props
+}) => {
   const baseClasses =
-    "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background"
+    "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background";
 
   const variants = {
     default: "bg-primary text-primary-foreground hover:bg-primary/90",
     outline: "border border-input hover:bg-accent hover:text-accent-foreground",
     secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
     ghost: "hover:bg-accent hover:text-accent-foreground",
-  }
+  };
 
   const sizes = {
     default: "h-10 py-2 px-4",
     sm: "h-9 px-3 rounded-md",
     lg: "h-11 px-8 rounded-md",
     icon: "h-10 w-10",
-  }
+  };
 
   return (
-    <button className={`${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`} {...props}>
+    <button
+      className={`${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`}
+      {...props}
+    >
       {children}
     </button>
-  )
-}
+  );
+};
 
 const Card = ({ children, className = "", ...props }) => (
-  <div className={`rounded-lg border bg-card text-card-foreground shadow-sm ${className}`} {...props}>
+  <div
+    className={`rounded-lg border bg-card text-card-foreground shadow-sm ${className}`}
+    {...props}
+  >
     {children}
   </div>
-)
+);
 
 const CardHeader = ({ children, className = "", ...props }) => (
-  <div className={`flex flex-col space-y-1.5 p-4 md:p-6 ${className}`} {...props}>
+  <div
+    className={`flex flex-col space-y-1.5 p-4 md:p-6 ${className}`}
+    {...props}
+  >
     {children}
   </div>
-)
+);
 
 const CardTitle = ({ children, className = "", ...props }) => (
-  <h3 className={`text-lg md:text-2xl font-semibold leading-none tracking-tight ${className}`} {...props}>
+  <h3
+    className={`text-lg md:text-2xl font-semibold leading-none tracking-tight ${className}`}
+    {...props}
+  >
     {children}
   </h3>
-)
+);
 
 const CardContent = ({ children, className = "", ...props }) => (
   <div className={`p-4 md:p-6 pt-0 ${className}`} {...props}>
     {children}
   </div>
-)
+);
 
 const Badge = ({ children, className = "", variant = "default", ...props }) => {
   const variants = {
     default: "bg-primary hover:bg-primary/80 text-primary-foreground",
     secondary: "bg-secondary hover:bg-secondary/80 text-secondary-foreground",
-    outline: "text-foreground border border-input hover:bg-accent hover:text-accent-foreground",
-  }
+    outline:
+      "text-foreground border border-input hover:bg-accent hover:text-accent-foreground",
+  };
 
   return (
     <div
@@ -108,17 +127,17 @@ const Badge = ({ children, className = "", variant = "default", ...props }) => {
     >
       {children}
     </div>
-  )
-}
+  );
+};
 
 // Technology Icon Component
 const TechIcon = ({ name, icon: IconComponent, color, delay = 0 }) => {
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), delay)
-    return () => clearTimeout(timer)
-  }, [delay])
+    const timer = setTimeout(() => setIsVisible(true), delay);
+    return () => clearTimeout(timer);
+  }, [delay]);
 
   return (
     <div
@@ -142,48 +161,60 @@ const TechIcon = ({ name, icon: IconComponent, color, delay = 0 }) => {
       {/* Glow effect */}
       <div className="absolute inset-0 rounded-xl bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
     </div>
-  )
-}
+  );
+};
 
 // Desktop Icon Component - Hidden on mobile
-const DesktopIcon = ({ icon: Icon, label, onDoubleClick, position, onDrag }) => {
-  const [isDragging, setIsDragging] = useState(false)
-  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 })
-  const [currentPosition, setCurrentPosition] = useState(position)
+const DesktopIcon = ({
+  icon: Icon,
+  label,
+  onDoubleClick,
+  position,
+  onDrag,
+}) => {
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const [currentPosition, setCurrentPosition] = useState(position);
 
   const handleMouseDown = (e) => {
-    setIsDragging(true)
+    setIsDragging(true);
     setDragOffset({
       x: e.clientX - currentPosition.x,
       y: e.clientY - currentPosition.y,
-    })
-  }
+    });
+  };
 
   const handleMouseMove = (e) => {
     if (isDragging) {
       const newPosition = {
-        x: Math.max(0, Math.min(window.innerWidth - 80, e.clientX - dragOffset.x)),
-        y: Math.max(0, Math.min(window.innerHeight - 100, e.clientY - dragOffset.y)),
-      }
-      setCurrentPosition(newPosition)
-      onDrag && onDrag(newPosition)
+        x: Math.max(
+          0,
+          Math.min(window.innerWidth - 80, e.clientX - dragOffset.x)
+        ),
+        y: Math.max(
+          0,
+          Math.min(window.innerHeight - 100, e.clientY - dragOffset.y)
+        ),
+      };
+      setCurrentPosition(newPosition);
+      onDrag && onDrag(newPosition);
     }
-  }
+  };
 
   const handleMouseUp = () => {
-    setIsDragging(false)
-  }
+    setIsDragging(false);
+  };
 
   useEffect(() => {
     if (isDragging) {
-      window.addEventListener("mousemove", handleMouseMove)
-      window.addEventListener("mouseup", handleMouseUp)
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mouseup", handleMouseUp);
       return () => {
-        window.removeEventListener("mousemove", handleMouseMove)
-        window.removeEventListener("mouseup", handleMouseUp)
-      }
+        window.removeEventListener("mousemove", handleMouseMove);
+        window.removeEventListener("mouseup", handleMouseUp);
+      };
     }
-  }, [isDragging, dragOffset, currentPosition])
+  }, [isDragging, dragOffset, currentPosition]);
 
   return (
     <div
@@ -195,10 +226,12 @@ const DesktopIcon = ({ icon: Icon, label, onDoubleClick, position, onDrag }) => 
       <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center mb-2 group-hover:bg-white/30 transition-colors border border-white/30">
         <Icon className="w-8 h-8 text-white drop-shadow-lg" />
       </div>
-      <span className="text-white text-xs font-medium drop-shadow-lg text-center max-w-20 leading-tight">{label}</span>
+      <span className="text-white text-xs font-medium drop-shadow-lg text-center max-w-20 leading-tight">
+        {label}
+      </span>
     </div>
-  )
-}
+  );
+};
 
 // Enhanced Window Component with responsive design
 const Window = ({
@@ -216,105 +249,123 @@ const Window = ({
   isMinimized,
   onMinimize,
 }) => {
-  const [position, setPosition] = useState({ x: initialX, y: initialY })
+  const [position, setPosition] = useState({ x: initialX, y: initialY });
   const [size, setSize] = useState({
     width: initialWidth,
     height: initialHeight,
-  })
-  const [isDragging, setIsDragging] = useState(false)
-  const [isResizing, setIsResizing] = useState(false)
-  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 })
+  });
+  const [isDragging, setIsDragging] = useState(false);
+  const [isResizing, setIsResizing] = useState(false);
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [resizeStart, setResizeStart] = useState({
     x: 0,
     y: 0,
     width: 0,
     height: 0,
-  })
-  const [isAnimating, setIsAnimating] = useState(true)
-  const [isMobile, setIsMobile] = useState(false)
-  const windowRef = useRef(null)
+  });
+  const [isAnimating, setIsAnimating] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+  const windowRef = useRef(null);
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
-    checkMobile()
-    window.addEventListener("resize", checkMobile)
-    return () => window.removeEventListener("resize", checkMobile)
-  }, [])
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
-    setTimeout(() => setIsAnimating(false), 300)
+    setTimeout(() => setIsAnimating(false), 300);
 
     // Responsive window sizing
     if (window.innerWidth < 768) {
       setSize({
         width: Math.min(window.innerWidth - 20, initialWidth),
         height: Math.min(window.innerHeight - 120, initialHeight), // More space for mobile taskbar
-      })
+      });
       setPosition({
         x: 10,
         y: 10,
-      })
+      });
     }
-  }, [])
+  }, []);
 
   const handleMouseDown = (e) => {
-    if (isMobile) return
+    if (isMobile) return;
 
-    onFocus(id)
-    if (e.target.closest(".window-header") && !e.target.closest(".window-controls")) {
-      setIsDragging(true)
+    onFocus(id);
+    if (
+      e.target.closest(".window-header") &&
+      !e.target.closest(".window-controls")
+    ) {
+      setIsDragging(true);
       setDragOffset({
         x: e.clientX - position.x,
         y: e.clientY - position.y,
-      })
+      });
     } else if (e.target.classList.contains("resize-handle")) {
-      setIsResizing(true)
+      setIsResizing(true);
       setResizeStart({
         x: e.clientX,
         y: e.clientY,
         width: size.width,
         height: size.height,
-      })
+      });
     }
-  }
+  };
 
   const handleMouseMove = (e) => {
-    if (isMobile) return
+    if (isMobile) return;
 
     if (isDragging) {
       setPosition({
-        x: Math.max(0, Math.min(window.innerWidth - size.width, e.clientX - dragOffset.x)),
-        y: Math.max(0, Math.min(window.innerHeight - size.height - 80, e.clientY - dragOffset.y)), // Account for taskbar
-      })
+        x: Math.max(
+          0,
+          Math.min(window.innerWidth - size.width, e.clientX - dragOffset.x)
+        ),
+        y: Math.max(
+          0,
+          Math.min(
+            window.innerHeight - size.height - 80,
+            e.clientY - dragOffset.y
+          )
+        ), // Account for taskbar
+      });
     } else if (isResizing) {
-      const newWidth = resizeStart.width + (e.clientX - resizeStart.x)
-      const newHeight = resizeStart.height + (e.clientY - resizeStart.y)
+      const newWidth = resizeStart.width + (e.clientX - resizeStart.x);
+      const newHeight = resizeStart.height + (e.clientY - resizeStart.y);
       setSize({
-        width: Math.max(300, Math.min(window.innerWidth - position.x, newWidth)),
-        height: Math.max(200, Math.min(window.innerHeight - position.y - 80, newHeight)), // Account for taskbar
-      })
+        width: Math.max(
+          300,
+          Math.min(window.innerWidth - position.x, newWidth)
+        ),
+        height: Math.max(
+          200,
+          Math.min(window.innerHeight - position.y - 80, newHeight)
+        ), // Account for taskbar
+      });
     }
-  }
+  };
 
   const handleMouseUp = () => {
-    setIsDragging(false)
-    setIsResizing(false)
-  }
+    setIsDragging(false);
+    setIsResizing(false);
+  };
 
   useEffect(() => {
     if (isDragging || isResizing) {
-      window.addEventListener("mousemove", handleMouseMove)
-      window.addEventListener("mouseup", handleMouseUp)
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mouseup", handleMouseUp);
       return () => {
-        window.removeEventListener("mousemove", handleMouseMove)
-        window.removeEventListener("mouseup", handleMouseUp)
-      }
+        window.removeEventListener("mousemove", handleMouseMove);
+        window.removeEventListener("mouseup", handleMouseUp);
+      };
     }
-  }, [isDragging, isResizing, dragOffset, resizeStart, position, size])
+  }, [isDragging, isResizing, dragOffset, resizeStart, position, size]);
 
-  if (isMinimized) return null
+  if (isMinimized) return null;
 
   return (
     <div
@@ -322,7 +373,9 @@ const Window = ({
       className={`fixed bg-gray-800/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden flex flex-col transition-all duration-300 border border-gray-600/50 ${
         isFocused ? "z-50 shadow-blue-500/20" : "z-40"
       } ${isAnimating ? "scale-95 opacity-0" : "scale-100 opacity-100"} ${
-        isMobile ? "inset-4 !w-auto !h-auto !left-4 !top-4 !right-4 !bottom-20" : "absolute"
+        isMobile
+          ? "inset-4 !w-auto !h-auto !left-4 !top-4 !right-4 !bottom-20"
+          : "absolute"
       }`}
       style={
         !isMobile
@@ -357,31 +410,40 @@ const Window = ({
           </div>
           <div className="flex items-center space-x-2">
             <Icon className="w-3 h-3 md:w-4 md:h-4 text-gray-300" />
-            <span className="font-medium text-xs md:text-sm text-gray-200">{title}</span>
+            <span className="font-medium text-xs md:text-sm text-gray-200">
+              {title}
+            </span>
           </div>
         </div>
       </div>
 
-      <div className="flex-grow p-3 md:p-6 overflow-auto bg-gray-800/90 text-gray-100 custom-scrollbar">{children}</div>
+      <div className="flex-grow p-3 md:p-6 overflow-auto bg-gray-800/90 text-gray-100 custom-scrollbar">
+        {children}
+      </div>
 
       {!isMobile && (
-        <div className="resize-handle absolute bottom-0 right-0 w-4 h-4 cursor-nw-resize" onMouseDown={handleMouseDown}>
+        <div
+          className="resize-handle absolute bottom-0 right-0 w-4 h-4 cursor-nw-resize"
+          onMouseDown={handleMouseDown}
+        >
           <div className="absolute bottom-1 right-1 w-2 h-2 border-r-2 border-b-2 border-gray-400" />
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
 // Mobile Navigation Component
 const MobileNav = ({ windowConfigs, openWindow, isOpen, onToggle }) => {
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
   return (
     <div className="md:hidden fixed inset-0 bg-black/50 z-50 flex items-end">
       <div className="w-full bg-white/95 backdrop-blur-xl rounded-t-xl p-4 max-h-[70vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-gray-800">Portfolio Menu</h2>
+          <h2 className="text-lg font-semibold text-gray-800">
+            Portfolio Menu
+          </h2>
           <Button variant="ghost" size="sm" onClick={onToggle}>
             <X className="w-4 h-4" />
           </Button>
@@ -391,13 +453,13 @@ const MobileNav = ({ windowConfigs, openWindow, isOpen, onToggle }) => {
           {Object.entries(windowConfigs)
             .slice(0, 5)
             .map(([id, config]) => {
-              const Icon = config.icon
+              const Icon = config.icon;
               return (
                 <button
                   key={id}
                   onClick={() => {
-                    openWindow(id)
-                    onToggle()
+                    openWindow(id);
+                    onToggle();
                   }}
                   className="flex flex-col items-center space-y-2 p-4 rounded-lg hover:bg-gray-100 transition-colors"
                 >
@@ -406,15 +468,17 @@ const MobileNav = ({ windowConfigs, openWindow, isOpen, onToggle }) => {
                   >
                     <Icon className="w-6 h-6 text-white" />
                   </div>
-                  <span className="text-sm font-medium text-gray-700">{config.title}</span>
+                  <span className="text-sm font-medium text-gray-700">
+                    {config.title}
+                  </span>
                 </button>
-              )
+              );
             })}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 // This PC Content Component
 const ThisPCContent = ({ onOpenSection }) => (
@@ -430,7 +494,9 @@ const ThisPCContent = ({ onOpenSection }) => (
       >
         <CardContent className="p-3 md:p-4 pt-3 md:pt-4 text-center">
           <User className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 text-blue-400" />
-          <p className="text-xs md:text-sm font-medium text-gray-200">About Me</p>
+          <p className="text-xs md:text-sm font-medium text-gray-200">
+            About Me
+          </p>
         </CardContent>
       </Card>
 
@@ -440,7 +506,9 @@ const ThisPCContent = ({ onOpenSection }) => (
       >
         <CardContent className="p-3 md:p-4 pt-3 md:pt-4 text-center">
           <Code className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 text-green-400" />
-          <p className="text-xs md:text-sm font-medium text-gray-200">Projects</p>
+          <p className="text-xs md:text-sm font-medium text-gray-200">
+            Projects
+          </p>
         </CardContent>
       </Card>
 
@@ -460,7 +528,9 @@ const ThisPCContent = ({ onOpenSection }) => (
       >
         <CardContent className="p-3 md:p-4 pt-3 md:pt-4 text-center">
           <Briefcase className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 text-orange-400" />
-          <p className="text-xs md:text-sm font-medium text-gray-200">Experience</p>
+          <p className="text-xs md:text-sm font-medium text-gray-200">
+            Experience
+          </p>
         </CardContent>
       </Card>
 
@@ -470,13 +540,17 @@ const ThisPCContent = ({ onOpenSection }) => (
       >
         <CardContent className="p-3 md:p-4 pt-3 md:pt-4 text-center">
           <Mail className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 text-pink-400" />
-          <p className="text-xs md:text-sm font-medium text-gray-200">Contact</p>
+          <p className="text-xs md:text-sm font-medium text-gray-200">
+            Contact
+          </p>
         </CardContent>
       </Card>
     </div>
 
     <div className="mt-4 md:mt-6">
-      <h3 className="text-base md:text-lg font-semibold text-gray-200 mb-3">Quick Access</h3>
+      <h3 className="text-base md:text-lg font-semibold text-gray-200 mb-3">
+        Quick Access
+      </h3>
       <div className="grid grid-cols-1 gap-2">
         <div className="flex items-center space-x-3 p-3 bg-gray-700/50 rounded-lg hover:bg-gray-600/50 transition-colors cursor-pointer">
           <Folder className="w-4 h-4 md:w-5 md:h-5 text-blue-400" />
@@ -497,7 +571,7 @@ const ThisPCContent = ({ onOpenSection }) => (
       </div>
     </div>
   </div>
-)
+);
 
 // Recycle Bin Content Component
 const RecycleBinContent = () => (
@@ -508,22 +582,30 @@ const RecycleBinContent = () => (
 
     <div className="text-center py-8 md:py-12">
       <Trash2 className="w-12 h-12 md:w-16 md:h-16 mx-auto mb-4 text-gray-500" />
-      <p className="text-gray-300 mb-4 text-sm md:text-base">Recycle Bin is empty</p>
+      <p className="text-gray-300 mb-4 text-sm md:text-base">
+        Recycle Bin is empty
+      </p>
       <p className="text-xs md:text-sm text-gray-400">
-        When you delete files, they'll appear here before being permanently removed.
+        When you delete files, they'll appear here before being permanently
+        removed.
       </p>
     </div>
 
     <div className="border-t border-gray-600 pt-4">
       <div className="flex justify-between items-center">
         <span className="text-xs md:text-sm text-gray-400">0 items</span>
-        <Button variant="outline" size="sm" disabled className="border-gray-600 text-gray-400 bg-transparent">
+        <Button
+          variant="outline"
+          size="sm"
+          disabled
+          className="border-gray-600 text-gray-400 bg-transparent"
+        >
           Empty Recycle Bin
         </Button>
       </div>
     </div>
   </div>
-)
+);
 
 // Search Results Component
 const SearchResults = ({ query, onClose }) => (
@@ -532,7 +614,12 @@ const SearchResults = ({ query, onClose }) => (
       <h2 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
         Search Results
       </h2>
-      <Button variant="ghost" size="sm" onClick={onClose} className="text-gray-300 hover:text-white">
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={onClose}
+        className="text-gray-300 hover:text-white"
+      >
         ×
       </Button>
     </div>
@@ -548,8 +635,12 @@ const SearchResults = ({ query, onClose }) => (
         <div className="flex items-center space-x-3 p-3 bg-gray-700/50 rounded-lg border border-gray-600 hover:border-blue-400 transition-colors cursor-pointer">
           <User className="w-4 h-4 md:w-5 md:h-5 text-blue-400" />
           <div>
-            <p className="font-medium text-gray-200 text-sm md:text-base">About Me</p>
-            <p className="text-xs md:text-sm text-gray-400">Personal information and background</p>
+            <p className="font-medium text-gray-200 text-sm md:text-base">
+              About Me
+            </p>
+            <p className="text-xs md:text-sm text-gray-400">
+              Personal information and background
+            </p>
           </div>
         </div>
       )}
@@ -558,8 +649,12 @@ const SearchResults = ({ query, onClose }) => (
         <div className="flex items-center space-x-3 p-3 bg-gray-700/50 rounded-lg border border-gray-600 hover:border-green-400 transition-colors cursor-pointer">
           <Code className="w-4 h-4 md:w-5 md:h-5 text-green-400" />
           <div>
-            <p className="font-medium text-gray-200 text-sm md:text-base">Projects</p>
-            <p className="text-xs md:text-sm text-gray-400">Portfolio of completed work</p>
+            <p className="font-medium text-gray-200 text-sm md:text-base">
+              Projects
+            </p>
+            <p className="text-xs md:text-sm text-gray-400">
+              Portfolio of completed work
+            </p>
           </div>
         </div>
       )}
@@ -568,8 +663,12 @@ const SearchResults = ({ query, onClose }) => (
         <div className="flex items-center space-x-3 p-3 bg-gray-700/50 rounded-lg border border-gray-600 hover:border-purple-400 transition-colors cursor-pointer">
           <Award className="w-4 h-4 md:w-5 md:h-5 text-purple-400" />
           <div>
-            <p className="font-medium text-gray-200 text-sm md:text-base">Skills</p>
-            <p className="text-xs md:text-sm text-gray-400">Technical abilities and expertise</p>
+            <p className="font-medium text-gray-200 text-sm md:text-base">
+              Skills
+            </p>
+            <p className="text-xs md:text-sm text-gray-400">
+              Technical abilities and expertise
+            </p>
           </div>
         </div>
       )}
@@ -578,8 +677,12 @@ const SearchResults = ({ query, onClose }) => (
         <div className="flex items-center space-x-3 p-3 bg-gray-700/50 rounded-lg border border-gray-600 hover:border-pink-400 transition-colors cursor-pointer">
           <Mail className="w-4 h-4 md:w-5 md:h-5 text-pink-400" />
           <div>
-            <p className="font-medium text-gray-200 text-sm md:text-base">Contact</p>
-            <p className="text-xs md:text-sm text-gray-400">Get in touch information</p>
+            <p className="font-medium text-gray-200 text-sm md:text-base">
+              Contact
+            </p>
+            <p className="text-xs md:text-sm text-gray-400">
+              Get in touch information
+            </p>
           </div>
         </div>
       )}
@@ -591,7 +694,9 @@ const SearchResults = ({ query, onClose }) => (
         query.trim() && (
           <div className="text-center py-6 md:py-8">
             <Search className="w-8 h-8 md:w-12 md:h-12 mx-auto mb-3 text-gray-500" />
-            <p className="text-gray-300 text-sm md:text-base">No results found for "{query}"</p>
+            <p className="text-gray-300 text-sm md:text-base">
+              No results found for "{query}"
+            </p>
             <p className="text-xs md:text-sm text-gray-400 mt-1">
               Try searching for: about, projects, skills, or contact
             </p>
@@ -599,7 +704,7 @@ const SearchResults = ({ query, onClose }) => (
         )}
     </div>
   </div>
-)
+);
 
 // Content Components with responsive design and photo
 const AboutMeContent = () => (
@@ -613,27 +718,35 @@ const AboutMeContent = () => (
             alt="Aaditya Aggarwal"
             className="w-full h-full object-cover rounded-full"
             onError={(e) => {
-              e.target.style.display = "none"
-              e.target.nextSibling.style.display = "flex"
+              e.target.style.display = "none";
+              e.target.nextSibling.style.display = "flex";
             }}
           />
-          <User className="w-8 h-8 md:w-12 md:h-12 text-blue-400" style={{ display: "none" }} />
+          <User
+            className="w-8 h-8 md:w-12 md:h-12 text-blue-400"
+            style={{ display: "none" }}
+          />
         </div>
       </div>
       <h2 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
         Aaditya Aggarwal
       </h2>
-      <p className="text-blue-400 font-medium text-sm md:text-base">MERN Stack Developer</p>
+      <p className="text-blue-400 font-medium text-sm md:text-base">
+        MERN Stack Developer
+      </p>
     </div>
 
     <Card className="bg-gray-700/50 border-gray-600">
       <CardContent className="p-3 md:p-4 pt-3 md:pt-4">
         <p className="text-gray-300 leading-relaxed text-sm md:text-base">
-          Passionate developer with 1+ years of experience creating innovative web applications. I love creating
-          innovative solutions and learning new technologies.
+          Passionate developer with 1+ years of experience creating innovative
+          web applications. I love creating innovative solutions and learning
+          new technologies.
         </p>
         <br />
-        <p className="text-gray-300 leading-relaxed text-sm md:text-base">I'm passionate about:</p>
+        <p className="text-gray-300 leading-relaxed text-sm md:text-base">
+          I'm passionate about:
+        </p>
         <ul className="list-disc list-inside text-gray-300 leading-relaxed text-sm md:text-base">
           <li>Building scalable and efficient web applications</li>
           <li>Learning cutting-edge technologies</li>
@@ -658,10 +771,27 @@ const AboutMeContent = () => (
       </Card>
     </div>
   </div>
-)
+);
 
 const ProjectsContent = () => {
   const projects = [
+    {
+      title: "SKM AI",
+      description:
+        "Smart Kochi Metro AI (SKM AI) is an AI-powered system aimed at optimizing metro operations and improving commuter experience through smart data insights and automation.",
+      tech: [
+        "MongoDB",
+        "React",
+        "Node + Express",
+        "Docker",
+        "Tensor FLow + Python",
+        "IoT",
+      ],
+      status: "Under Development",
+      featured: false,
+      liveLink: "https://kochi-metro.vercel.app/",
+      codeLink: "https://github.com/Aaditya2302/Kochi-Metro",
+    },
     {
       title: "Restroom Finder",
       description:
@@ -669,31 +799,30 @@ const ProjectsContent = () => {
       tech: ["React", "Node.js", "Tailwind CSS", "Map API"],
       status: "Live",
       featured: true,
+      liveLink: "https://www.pariharindia.com/",
+      codeLink: "https://github.com/Hello-sketch-ux/PariharProject",
     },
     {
       title: "WatchDawgs",
       description:
         "Built a tool to detect credential leaks (API keys, tokens) in GitHub repos using Puppeteer automation. Enabled real-time alerts and logging of suspicious commits for quick security action.",
       tech: ["React", "Node.js", "Puppeteer", "Tailwind CSS"],
-      status: "In Development",
+      status: "Under Construction",
       featured: true,
+      liveLink: "#",
+      codeLink: "https://github.com/Aaditya2302/WatchDawgs",
     },
     {
       title: "Blog Platform (Appwrite)",
       description:
         "Built a basic blog site using Appwrite backend for authentication and database. Includes post creation, editing, and real-time syncing (UI still in progress).",
       tech: ["React", "Appwrite", "Tailwind CSS"],
-      status: "In development",
+      status: "Building",
       featured: false,
+      liveLink: "#",
+      codeLink: "https://github.com/Aaditya2302/BackendProject",
     },
-    {
-      title: "Folkify",
-      description: "A musical website consist of folk songs.",
-      tech: ["HTML", "CSS", "JS"],
-      status: "Completed",
-      featured: false,
-    },
-  ]
+  ];
 
   return (
     <div className="space-y-4 md:space-y-6">
@@ -725,9 +854,10 @@ const ProjectsContent = () => {
                     ${
                       project.status === "Live"
                         ? "border-green-400 text-green-400"
-                        : project.status === "In Development"
-                          ? "border-yellow-400 text-yellow-400"
-                          : "border-blue-400 text-blue-400"
+                        : project.status === "Under Construction" ||
+                          project.status === "Building"
+                        ? "border-yellow-400 text-yellow-400"
+                        : "border-blue-400 text-blue-400"
                     }
                   `}
                   >
@@ -737,38 +867,66 @@ const ProjectsContent = () => {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-400 text-xs md:text-sm mb-3">{project.description}</p>
+              <p className="text-gray-400 text-xs md:text-sm mb-3">
+                {project.description}
+              </p>
               <div className="flex flex-wrap gap-1 md:gap-2 mb-3">
                 {project.tech.map((tech) => (
-                  <Badge key={tech} variant="secondary" className="bg-blue-500/20 text-blue-300 text-xs">
+                  <Badge
+                    key={tech}
+                    variant="secondary"
+                    className="bg-blue-500/20 text-blue-300 text-xs"
+                  >
                     {tech}
                   </Badge>
                 ))}
               </div>
               <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
-                <Button
-                  size="sm"
-                  className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 w-full md:w-auto"
+                <a
+                  href={project.liveLink}
+                  target={project.liveLink !== "#" ? "_blank" : undefined}
+                  rel={
+                    project.liveLink !== "#" ? "noopener noreferrer" : undefined
+                  }
+                  onClick={(e) => {
+                    if (project.liveLink === "#") {
+                      e.preventDefault();
+                    }
+                  }}
+                  className="w-full md:w-auto"
                 >
-                  <ExternalLink className="w-3 h-3 mr-1" />
-                  Live Demo
-                </Button>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="border-gray-500 text-gray-300 hover:bg-gray-600 bg-transparent w-full md:w-auto"
+                  <Button
+                    size="sm"
+                    className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 w-full"
+                    disabled={project.liveLink === "#"}
+                  >
+                    <ExternalLink className="w-3 h-3 mr-1" />
+                    Live Demo
+                  </Button>
+                </a>
+                <a
+                  href={project.codeLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full md:w-auto"
                 >
-                  <Github className="w-3 h-3 mr-1" />
-                  Code
-                </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="border-gray-500 text-gray-300 hover:bg-gray-600 bg-transparent w-full"
+                  >
+                    <Github className="w-3 h-3 mr-1" />
+                    Code
+                  </Button>
+                </a>
               </div>
             </CardContent>
           </Card>
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
 // Updated Skills Content with responsive design
 const SkillsContent = () => {
@@ -834,7 +992,7 @@ const SkillsContent = () => {
         },
       ],
     },
-  ]
+  ];
 
   return (
     <div className="space-y-6 md:space-y-8">
@@ -844,10 +1002,18 @@ const SkillsContent = () => {
 
       {skillCategories.map((category, categoryIndex) => (
         <div key={categoryIndex} className="space-y-3 md:space-y-4">
-          <h3 className="text-lg md:text-xl font-semibold text-gray-200 mb-3 md:mb-4">{category.title}</h3>
+          <h3 className="text-lg md:text-xl font-semibold text-gray-200 mb-3 md:mb-4">
+            {category.title}
+          </h3>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
             {category.skills.map((skill, index) => (
-              <TechIcon key={skill.name} name={skill.name} icon={skill.icon} color={skill.color} delay={index * 100} />
+              <TechIcon
+                key={skill.name}
+                name={skill.name}
+                icon={skill.icon}
+                color={skill.color}
+                delay={index * 100}
+              />
             ))}
           </div>
         </div>
@@ -855,12 +1021,13 @@ const SkillsContent = () => {
 
       <div className="mt-6 md:mt-8 p-3 md:p-4 bg-gray-700/30 rounded-lg border border-gray-600">
         <p className="text-gray-300 text-xs md:text-sm text-center">
-          🚀 Always learning and exploring new technologies to stay current with industry trends!
+          🚀 Always learning and exploring new technologies to stay current with
+          industry trends!
         </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
 const ExperienceContent = () => {
   const experiences = [
@@ -878,8 +1045,9 @@ const ExperienceContent = () => {
         "Reduced page load time by 30% through frontend performance optimization",
         "Streamlined deployment workflows using GitHub Actions and CI/CD practices",
       ],
+      liveLink: "https://www.pariharindia.com/",
     },
-  ]
+  ];
 
   return (
     <div className="space-y-4 md:space-y-6">
@@ -896,18 +1064,29 @@ const ExperienceContent = () => {
             <CardHeader>
               <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2">
                 <div>
-                  <CardTitle className="text-base md:text-lg text-gray-200">{exp.title}</CardTitle>
-                  <p className="text-blue-400 font-medium text-sm md:text-base">{exp.company}</p>
+                  <CardTitle className="text-base md:text-lg text-gray-200">
+                    {exp.title}
+                  </CardTitle>
+                  <p className="text-blue-400 font-medium text-sm md:text-base">
+                    {exp.company}
+                  </p>
                 </div>
-                <Badge variant="outline" className="border-gray-500 text-gray-300 self-start">
+                <Badge
+                  variant="outline"
+                  className="border-gray-500 text-gray-300 self-start"
+                >
                   {exp.period}
                 </Badge>
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-200 mb-3 text-sm md:text-base">{exp.description}</p>
+              <p className="text-gray-200 mb-3 text-sm md:text-base">
+                {exp.description}
+              </p>
               <div className="space-y-1">
-                <p className="text-base md:text-xl text-purple-300 font-bold">Key Achievements:</p>
+                <p className="text-base md:text-xl text-purple-300 font-bold">
+                  Key Achievements:
+                </p>
                 <ul className="list-disc list-inside space-y-1">
                   {exp.achievements.map((achievement, i) => (
                     <li key={i} className="text-gray-200 text-sm md:text-base">
@@ -916,13 +1095,35 @@ const ExperienceContent = () => {
                   ))}
                 </ul>
               </div>
+              <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
+                <a
+                  href={exp.liveLink}
+                  target={exp.liveLink !== "#" ? "_blank" : undefined}
+                  rel={exp.liveLink !== "#" ? "noopener noreferrer" : undefined}
+                  onClick={(e) => {
+                    if (exp.liveLink === "#") {
+                      e.preventDefault()
+                    }
+                  }}
+                  className="w-full md:w-auto"
+                >
+                  <Button
+                    size="sm"
+                    className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 w-full "
+                    disabled={exp.liveLink === "#"}
+                  >
+                    <ExternalLink className="w-3 h-3 mr-1" />
+                    Live Demo
+                  </Button>
+                </a>
+                </div>
             </CardContent>
           </Card>
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
 const ContactContent = () => (
   <div className="space-y-4 md:space-y-6">
@@ -941,7 +1142,9 @@ const ContactContent = () => (
             <Mail className="w-4 h-4 md:w-5 md:h-5 text-blue-400 flex-shrink-0" />
             <div className="min-w-0">
               <p className="text-xs text-gray-400">Email</p>
-              <p className="text-xs md:text-sm text-gray-200 truncate">aadityaaggarwal475@gmail.com</p>
+              <p className="text-xs md:text-sm text-gray-200 truncate">
+                aadityaaggarwal475@gmail.com
+              </p>
             </div>
           </div>
           <div className="flex items-center space-x-3 p-3 bg-gray-600/50 rounded-lg border border-gray-500">
@@ -976,19 +1179,24 @@ const ContactContent = () => (
         </div>
 
         <div className="flex flex-col md:flex-row gap-3">
-          <Button className="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700">
+          {/* <Button className="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700">
             <Mail className="w-3 h-3 md:w-4 md:h-4 mr-2" />
             Send Message
-          </Button>
-          <Button variant="outline" className="flex-1 border-gray-500 text-gray-300 hover:bg-gray-600 bg-transparent">
-            <Download className="w-3 h-3 md:w-4 md:h-4 mr-2" />
-            Download Resume
-          </Button>
+          </Button> */}
+          <a href="/ResumeAadi.pdf" download="Aaditya_Aggarwal_Resume.pdf" className="flex-1">
+            <Button
+              variant="outline"
+              className="flex-1 border-gray-500 text-gray-300 hover:bg-gray-600 bg-transparent w-full"
+            >
+              <Download className="w-3 h-3 md:w-4 md:h-4 mr-2" />
+              Download Resume
+            </Button>
+          </a>
         </div>
       </CardContent>
     </Card>
   </div>
-)
+);
 
 // Main App Component with responsive design
 export default function DesktopPortfolio() {
@@ -1065,18 +1273,18 @@ export default function DesktopPortfolio() {
       initialWidth: 550,
       initialHeight: 450,
     },
-  })
+  });
 
-  const [focusedWindow, setFocusedWindow] = useState(null)
-  const [nextZIndex, setNextZIndex] = useState(1)
-  const [currentTime, setCurrentTime] = useState(new Date())
-  const [showStartMenu, setShowStartMenu] = useState(false)
-  const [showMobileNav, setShowMobileNav] = useState(false)
-  const [wifiConnected, setWifiConnected] = useState(true)
-  const [volumeOn, setVolumeOn] = useState(true)
-  const [batteryLevel, setBatteryLevel] = useState(85)
-  const [searchQuery, setSearchQuery] = useState("")
-  const [showSearchInput, setShowSearchInput] = useState(false)
+  const [focusedWindow, setFocusedWindow] = useState(null);
+  const [nextZIndex, setNextZIndex] = useState(1);
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [showStartMenu, setShowStartMenu] = useState(false);
+  const [showMobileNav, setShowMobileNav] = useState(false);
+  const [wifiConnected, setWifiConnected] = useState(true);
+  const [volumeOn, setVolumeOn] = useState(true);
+  const [batteryLevel, setBatteryLevel] = useState(85);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showSearchInput, setShowSearchInput] = useState(false);
 
   const [desktopIcons, setDesktopIcons] = useState([
     {
@@ -1091,12 +1299,12 @@ export default function DesktopPortfolio() {
       label: "Recycle Bin",
       position: { x: 50, y: 150 },
     },
-  ])
+  ]);
 
   useEffect(() => {
-    const timer = setInterval(() => setCurrentTime(new Date()), 1000)
-    return () => clearInterval(timer)
-  }, [])
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const windowConfigs = {
     about: {
@@ -1132,7 +1340,9 @@ export default function DesktopPortfolio() {
     thispc: {
       title: "This PC",
       icon: Monitor,
-      content: (props) => <ThisPCContent onOpenSection={openWindow} {...props} />,
+      content: (props) => (
+        <ThisPCContent onOpenSection={openWindow} {...props} />
+      ),
       color: "from-gray-500 to-gray-600",
     },
     recyclebin: {
@@ -1144,10 +1354,16 @@ export default function DesktopPortfolio() {
     search: {
       title: "Search",
       icon: Search,
-      content: (props) => <SearchResults query={searchQuery} onClose={() => closeWindow("search")} {...props} />,
+      content: (props) => (
+        <SearchResults
+          query={searchQuery}
+          onClose={() => closeWindow("search")}
+          {...props}
+        />
+      ),
       color: "from-blue-500 to-purple-600",
     },
-  }
+  };
 
   const openWindow = (id) => {
     setOpenWindows((prev) => ({
@@ -1158,46 +1374,50 @@ export default function DesktopPortfolio() {
         isMinimized: false,
         zIndex: nextZIndex,
       },
-    }))
-    setFocusedWindow(id)
-    setNextZIndex((prev) => prev + 1)
-  }
+    }));
+    setFocusedWindow(id);
+    setNextZIndex((prev) => prev + 1);
+  };
 
   const closeWindow = (id) => {
     setOpenWindows((prev) => ({
       ...prev,
       [id]: { ...prev[id], isOpen: false },
-    }))
-  }
+    }));
+  };
 
   const minimizeWindow = (id) => {
     setOpenWindows((prev) => ({
       ...prev,
       [id]: { ...prev[id], isMinimized: true },
-    }))
-  }
+    }));
+  };
 
   const focusWindow = (id) => {
     if (focusedWindow !== id) {
       setOpenWindows((prev) => ({
         ...prev,
         [id]: { ...prev[id], zIndex: nextZIndex },
-      }))
-      setFocusedWindow(id)
-      setNextZIndex((prev) => prev + 1)
+      }));
+      setFocusedWindow(id);
+      setNextZIndex((prev) => prev + 1);
     }
-  }
+  };
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
-      openWindow("search")
+      openWindow("search");
     }
-    setShowSearchInput(false)
-  }
+    setShowSearchInput(false);
+  };
 
   const handleDesktopIconDrag = (iconId, newPosition) => {
-    setDesktopIcons((prev) => prev.map((icon) => (icon.id === iconId ? { ...icon, position: newPosition } : icon)))
-  }
+    setDesktopIcons((prev) =>
+      prev.map((icon) =>
+        icon.id === iconId ? { ...icon, position: newPosition } : icon
+      )
+    );
+  };
 
   return (
     <div className="relative w-screen h-screen overflow-hidden font-inter">
@@ -1208,13 +1428,25 @@ export default function DesktopPortfolio() {
 
         {/* Mountain silhouettes */}
         <div className="absolute bottom-0 left-0 right-0 h-2/3">
-          <svg viewBox="0 0 1200 400" className="absolute bottom-0 w-full h-full">
+          <svg
+            viewBox="0 0 1200 400"
+            className="absolute bottom-0 w-full h-full"
+          >
             {/* Back mountains */}
-            <polygon points="0,400 200,100 400,200 600,80 800,180 1000,120 1200,200 1200,400" fill="rgba(0,0,0,0.3)" />
+            <polygon
+              points="0,400 200,100 400,200 600,80 800,180 1000,120 1200,200 1200,400"
+              fill="rgba(0,0,0,0.3)"
+            />
             {/* Middle mountains */}
-            <polygon points="0,400 150,150 350,250 550,130 750,220 950,160 1200,250 1200,400" fill="rgba(0,0,0,0.4)" />
+            <polygon
+              points="0,400 150,150 350,250 550,130 750,220 950,160 1200,250 1200,400"
+              fill="rgba(0,0,0,0.4)"
+            />
             {/* Front mountains */}
-            <polygon points="0,400 100,200 300,300 500,180 700,280 900,220 1100,300 1200,400" fill="rgba(0,0,0,0.5)" />
+            <polygon
+              points="0,400 100,200 300,300 500,180 700,280 900,220 1100,300 1200,400"
+              fill="rgba(0,0,0,0.5)"
+            />
           </svg>
         </div>
 
@@ -1251,7 +1483,9 @@ export default function DesktopPortfolio() {
           label={iconData.label}
           position={iconData.position}
           onDoubleClick={() => openWindow(iconData.id)}
-          onDrag={(newPosition) => handleDesktopIconDrag(iconData.id, newPosition)}
+          onDrag={(newPosition) =>
+            handleDesktopIconDrag(iconData.id, newPosition)
+          }
         />
       ))}
 
@@ -1278,7 +1512,11 @@ export default function DesktopPortfolio() {
               autoFocus
             />
             <div className="flex justify-end space-x-2 mt-4">
-              <Button variant="outline" onClick={() => setShowSearchInput(false)} size="sm">
+              <Button
+                variant="outline"
+                onClick={() => setShowSearchInput(false)}
+                size="sm"
+              >
                 Cancel
               </Button>
               <Button onClick={handleSearch} size="sm">
@@ -1291,8 +1529,8 @@ export default function DesktopPortfolio() {
 
       {/* Render Windows */}
       {Object.entries(openWindows).map(([id, config]) => {
-        if (!config.isOpen) return null
-        const WindowContent = windowConfigs[id].content
+        if (!config.isOpen) return null;
+        const WindowContent = windowConfigs[id].content;
         return (
           <Window
             key={id}
@@ -1312,7 +1550,7 @@ export default function DesktopPortfolio() {
           >
             <WindowContent />
           </Window>
-        )
+        );
       })}
 
       {/* Start Menu - Desktop only */}
@@ -1334,13 +1572,13 @@ export default function DesktopPortfolio() {
             {Object.entries(windowConfigs)
               .slice(0, 5)
               .map(([id, config]) => {
-                const Icon = config.icon
+                const Icon = config.icon;
                 return (
                   <button
                     key={id}
                     onClick={() => {
-                      openWindow(id)
-                      setShowStartMenu(false)
+                      openWindow(id);
+                      setShowStartMenu(false);
                     }}
                     className="flex items-center space-x-2 p-3 rounded-lg hover:bg-gray-100 transition-colors text-left"
                   >
@@ -1349,9 +1587,11 @@ export default function DesktopPortfolio() {
                     >
                       <Icon className="w-4 h-4 text-white" />
                     </div>
-                    <span className="text-sm font-medium text-gray-700">{config.title}</span>
+                    <span className="text-sm font-medium text-gray-700">
+                      {config.title}
+                    </span>
                   </button>
-                )
+                );
               })}
           </div>
         </div>
@@ -1364,9 +1604,9 @@ export default function DesktopPortfolio() {
           <button
             onClick={() => {
               if (window.innerWidth < 768) {
-                setShowMobileNav(!showMobileNav)
+                setShowMobileNav(!showMobileNav);
               } else {
-                setShowStartMenu(!showStartMenu)
+                setShowStartMenu(!showStartMenu);
               }
             }}
             className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100/80 transition-colors"
@@ -1387,7 +1627,9 @@ export default function DesktopPortfolio() {
             className="hidden sm:flex items-center space-x-2 px-2 md:px-3 py-1 md:py-2 bg-gray-100/80 rounded-lg hover:bg-gray-200/80 transition-colors"
           >
             <Search className="w-3 h-3 md:w-4 md:h-4 text-gray-600" />
-            <span className="text-xs md:text-sm text-gray-600 hidden md:inline">Search</span>
+            <span className="text-xs md:text-sm text-gray-600 hidden md:inline">
+              Search
+            </span>
           </button>
         </div>
 
@@ -1396,16 +1638,20 @@ export default function DesktopPortfolio() {
           {Object.entries(windowConfigs)
             .slice(0, 5)
             .map(([id, config]) => {
-              const Icon = config.icon
-              const isOpen = openWindows[id].isOpen
-              const isMinimized = openWindows[id].isMinimized
+              const Icon = config.icon;
+              const isOpen = openWindows[id].isOpen;
+              const isMinimized = openWindows[id].isMinimized;
 
               return (
                 <button
                   key={id}
-                  onClick={() => (isMinimized ? openWindow(id) : openWindow(id))}
+                  onClick={() =>
+                    isMinimized ? openWindow(id) : openWindow(id)
+                  }
                   className={`relative p-2 md:p-3 rounded-lg md:rounded-xl transition-all duration-300 hover:scale-105 md:hover:scale-110 group ${
-                    isOpen && !isMinimized ? "bg-blue-100 shadow-lg" : "hover:bg-gray-100/80"
+                    isOpen && !isMinimized
+                      ? "bg-blue-100 shadow-lg"
+                      : "hover:bg-gray-100/80"
                   }`}
                   title={config.title}
                 >
@@ -1418,7 +1664,7 @@ export default function DesktopPortfolio() {
                     <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-blue-600 rounded-full" />
                   )}
                 </button>
-              )
+              );
             })}
         </div>
 
@@ -1426,8 +1672,15 @@ export default function DesktopPortfolio() {
         <div className="flex items-center space-x-1 md:space-x-3">
           {/* System Icons with functionality - Hidden on small screens */}
           <div className="hidden sm:flex items-center space-x-1 md:space-x-2">
-            <button onClick={() => setWifiConnected(!wifiConnected)} className="relative group">
-              <Button variant="ghost" size="icon" className="w-6 h-6 md:w-8 md:h-8 text-gray-600 hover:text-gray-800">
+            <button
+              onClick={() => setWifiConnected(!wifiConnected)}
+              className="relative group"
+            >
+              <Button
+                variant="ghost"
+                size="icon"
+                className="w-6 h-6 md:w-8 md:h-8 text-gray-600 hover:text-gray-800"
+              >
                 {wifiConnected ? (
                   <Wifi className="w-3 h-3 md:w-4 md:h-4" />
                 ) : (
@@ -1436,8 +1689,15 @@ export default function DesktopPortfolio() {
               </Button>
             </button>
 
-            <button onClick={() => setVolumeOn(!volumeOn)} className="relative group">
-              <Button variant="ghost" size="icon" className="w-6 h-6 md:w-8 md:h-8 text-gray-600 hover:text-gray-800">
+            <button
+              onClick={() => setVolumeOn(!volumeOn)}
+              className="relative group"
+            >
+              <Button
+                variant="ghost"
+                size="icon"
+                className="w-6 h-6 md:w-8 md:h-8 text-gray-600 hover:text-gray-800"
+              >
                 {volumeOn ? (
                   <Volume2 className="w-3 h-3 md:w-4 md:h-4" />
                 ) : (
@@ -1447,7 +1707,11 @@ export default function DesktopPortfolio() {
             </button>
 
             <button className="relative group">
-              <Button variant="ghost" size="icon" className="w-6 h-6 md:w-8 md:h-8 text-gray-600 hover:text-gray-800">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="w-6 h-6 md:w-8 md:h-8 text-gray-600 hover:text-gray-800"
+              >
                 {batteryLevel > 20 ? (
                   <Battery className="w-3 h-3 md:w-4 md:h-4" />
                 ) : (
@@ -1482,8 +1746,8 @@ export default function DesktopPortfolio() {
         <div
           className="fixed inset-0 z-40"
           onClick={() => {
-            setShowStartMenu(false)
-            setShowMobileNav(false)
+            setShowStartMenu(false);
+            setShowMobileNav(false);
           }}
         />
       )}
@@ -1491,37 +1755,37 @@ export default function DesktopPortfolio() {
       {/* Custom Styles with responsive considerations */}
       <style jsx global>{`
         @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
-        
+
         body {
           font-family: "Inter", sans-serif;
           margin: 0;
           overflow: hidden;
         }
-        
+
         .custom-scrollbar::-webkit-scrollbar {
           width: 6px;
         }
-        
+
         @media (min-width: 768px) {
           .custom-scrollbar::-webkit-scrollbar {
             width: 8px;
           }
         }
-        
+
         .custom-scrollbar::-webkit-scrollbar-track {
           background: rgba(75, 85, 99, 0.3);
           border-radius: 4px;
         }
-        
+
         .custom-scrollbar::-webkit-scrollbar-thumb {
           background: rgba(156, 163, 175, 0.5);
           border-radius: 4px;
         }
-        
+
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
           background: rgba(156, 163, 175, 0.7);
         }
-        
+
         @keyframes slideIn {
           from {
             width: 0%;
@@ -1530,7 +1794,7 @@ export default function DesktopPortfolio() {
             width: var(--target-width);
           }
         }
-        
+
         @keyframes float {
           0%,
           100% {
@@ -1540,7 +1804,7 @@ export default function DesktopPortfolio() {
             transform: translateY(-20px) rotate(180deg);
           }
         }
-        
+
         @keyframes float-delayed {
           0%,
           100% {
@@ -1550,30 +1814,30 @@ export default function DesktopPortfolio() {
             transform: translateY(-30px) rotate(-180deg);
           }
         }
-        
+
         .animate-float {
           animation: float 8s ease-in-out infinite;
         }
-        
+
         .animate-float-delayed {
           animation: float-delayed 10s ease-in-out infinite;
         }
-        
+
         /* Touch-friendly interactions for mobile */
         @media (max-width: 767px) {
           .group:hover .group-hover\\:animate-bounce {
             animation: none;
           }
-          
+
           .hover\\:scale-110:hover {
             transform: scale(1.05);
           }
-          
+
           .hover\\:rotate-3:hover {
             transform: rotate(1deg);
           }
         }
       `}</style>
     </div>
-  )
+  );
 }
